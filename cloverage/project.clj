@@ -52,6 +52,7 @@
                                    [lambdaisland/kaocha-cloverage "1.0.75" :exclusions [org.clojure/clojure
                                                                                         org.clojure/spec.alpha]]]
                     :source-paths ["sample"]
+                    :resource-paths ["test-resources"]
                     :jvm-opts ["-Duser.language=en-US"]}
              :ci {:pedantic? :abort}}
   :aliases {"all" ["with-profile" "+1.8:+1.9:+1.10:+1.11"]

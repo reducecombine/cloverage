@@ -377,7 +377,7 @@
 
 (t/deftest test-all-reporters
   (let [generated-files ["coverage.txt" "index.html" "coverage.xml" "lcov.info" "coveralls.json"
-                         #_#_#_"raw-data.clj" "raw-stats.clj" "codecov.json"]]
+                         "raw-data.clj" "raw-stats.clj" "codecov.json"]]
     (doseq [f generated-files]
       (clojure.java.io/delete-file (io/file "out" f) true))
 
@@ -388,9 +388,10 @@
        "-x" "cloverage.sample.exercise-instrumentation"
        "cloverage.sample.exercise-instrumentation")
       (doseq [fname generated-files]
-        ;; If this deftest is failing, you can temporarily enable this to update the expectations:
-        #_(spit (str "test/resources/" fname) (slurp (str "out/" fname)))
-        (assert-equal-content! fname "test/resources" "out")))))
+        ;; If this deftest is failing, you can temporarily enable this form to update the expectations:
+        #_(when-not (System/getenv "CI")
+            (spit (str "test-resources/" fname) (slurp (str "out/" fname))))
+        (assert-equal-content! fname "test-resources" "out")))))
 
 (t/deftest test-cyclic-dependency
   (binding [cov/*exit-after-test* false]
